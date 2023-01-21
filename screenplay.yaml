@@ -1,0 +1,11 @@
+model: tts_models/en/vctk/vits
+
+text: |
+  a hello i am first!
+  b and i am second...
+  a hello second!
+
+actor_mappings:
+  a: p270
+  b: p255
+
