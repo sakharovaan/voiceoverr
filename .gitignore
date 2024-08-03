@@ -3,3 +3,4 @@ tts_*
 vocoder_*
 *.wav
 *.sh
+*.pt

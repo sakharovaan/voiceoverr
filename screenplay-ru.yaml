@@ -1,0 +1,9 @@
+text: |
+  a Привет, я первый голос
+  b А я второй
+  a <prosody pitch="x-low"> Привет второй! </prosody>
+
+# ['aidar', 'baya', 'kseniya', 'xenia', 'eugene', 'random']
+actor_mappings:
+  a: eugene
+  b: xenia
