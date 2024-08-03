@@ -4,3 +4,4 @@ vocoder_*
 *.wav
 *.sh
 *.pt
+rvc

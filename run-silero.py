@@ -1,6 +1,7 @@
 import torch
 import os
 import yaml
+import subprocess
 
 
 CONFIG_PATH = 'screenplay-ru.yaml'
@@ -47,3 +48,15 @@ for i, line in enumerate(lines):
     print(ssml_text)
 
     audio_paths = model.save_wav(ssml_text=ssml_text, speaker=voice.split(';')[0], sample_rate=48000, audio_path=f"{OUTPUT_PATH}/{filename}")
+
+    if speaker in config.get('rvc_revoice', {}):
+        subprocess.run([
+            "svc",
+            "infer",
+            "-o", f"{OUTPUT_PATH}/{filename}",
+            "-s", config['rvc_revoice'][speaker]['speaker'],
+            "-m", config['rvc_revoice'][speaker]['model'],
+            "-c", config['rvc_revoice'][speaker]['config'],
+            "-db", "-60",
+            f"{OUTPUT_PATH}/{filename}"
+        ])
