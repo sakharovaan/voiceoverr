@@ -26,16 +26,24 @@ for i, line in enumerate(lines):
     speaker = line.split(' ')[0]
     text = ' '.join(line.split(' ')[1:])
     voice = config['actor_mappings'][speaker]
+    if ';' in voice:
+        pitch = voice.split(';')[1]
+    else:
+        pitch = None
     
     filename = f'{i}_{speaker}_'
     for i in text:
         if i.isalpha():
             filename = "".join([filename,i])
+    filename = filename[0:30]
     filename += '.wav'
 
     print(f"{speaker} ({voice}): {text} -> {filename}")
 
-    ssml_text = f"<speak><p>{text}</p></speak>"
+    if pitch:
+        ssml_text = f'<speak><p><prosody pitch="{pitch}">{text}</prosody></p></speak>'
+    else:
+        ssml_text = f"<speak><p>{text}</p></speak>"
     print(ssml_text)
 
-    audio_paths = model.save_wav(ssml_text=ssml_text, speaker=voice, sample_rate=48000, audio_path=f"{OUTPUT_PATH}/{filename}")
+    audio_paths = model.save_wav(ssml_text=ssml_text, speaker=voice.split(';')[0], sample_rate=48000, audio_path=f"{OUTPUT_PATH}/{filename}")
